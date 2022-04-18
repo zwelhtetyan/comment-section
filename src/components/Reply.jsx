@@ -6,7 +6,7 @@ const Reply = () => {
         <div>
             <div className='replyWrapper'>
                 <Comment name='@maxblagun' />
-                <Comment />
+                <Comment name='@maxblagun' you='you' />
             </div>
         </div>
     );

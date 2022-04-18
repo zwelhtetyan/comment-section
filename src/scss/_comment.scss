@@ -34,13 +34,24 @@
         .avatar {
             width: 40px;
         }
+
         .name {
             font-weight: 700;
-            margin: 0 0.7em 0 1em;
+            margin: 0 0.5em;
             font-size: 18px;
+        }
+        .you {
+            background-color: $moderate-blue;
+            color: $white;
+            background-color: #5457b6;
+            color: white;
+            margin-right: 5px;
+            padding: 0 5px;
+            border-radius: 3px;
         }
         .createdAt {
             color: $grayish-blue;
+            font-size: 15px;
         }
         .reply {
             margin-left: auto;
@@ -60,6 +71,39 @@
                 color: $moderate-blue;
             }
         }
+
+        .delete-and-edit {
+            display: flex;
+            margin-left: auto;
+            .edit,
+            .delete {
+                display: flex;
+                font-weight: 700;
+                align-items: center;
+                margin-left: 1em;
+                cursor: pointer;
+
+                .edit-txt,
+                .delete-txt {
+                    margin-left: 5px;
+                    color: $moderate-blue;
+                }
+                .delete-txt {
+                    color: $soft-red;
+                }
+            }
+            .edit:hover .edit-txt,
+            .edit:hover .edit-img path {
+                color: $light-grayish-blue;
+                fill: $light-grayish-blue;
+            }
+
+            .delete:hover .delete-txt,
+            .delete:hover .delete-img path {
+                color: $pale-red;
+                fill: $pale-red;
+            }
+        }
     }
     .comment-text {
         color: $grayish-blue;
@@ -73,11 +117,11 @@
 .replyWrapper {
     width: 95%;
     margin-left: auto;
-    padding-left: 5%;
+    padding-left: 4%;
     border-left: 3px solid $light-grayish-blue;
 }
 
-@include responsive('mobile') {
+@include responsive('tablet') {
     .commentContainer {
         position: relative;
         padding-bottom: 4em;
@@ -94,7 +138,8 @@
             }
         }
         .header {
-            .reply {
+            .reply,
+            .delete-and-edit {
                 position: absolute;
                 right: 1em;
                 bottom: 1.3em;

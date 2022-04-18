@@ -33,9 +33,10 @@
     }
 }
 
-@include responsive('mobile') {
+@include responsive('tablet') {
     .add-comment-container {
         padding-bottom: 4em;
+        width: calc(100% - 1.6em);
         .account {
             position: absolute;
             left: 1em;

@@ -2,7 +2,7 @@
     margin: 0 auto;
     max-width: 680px;
     padding-bottom: 100px;
-    @include responsive('mobile') {
+    @include responsive('tablet') {
         padding-bottom: 150px;
     }
 }

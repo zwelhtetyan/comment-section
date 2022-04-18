@@ -1,6 +1,6 @@
 @mixin responsive($breakPoint) {
     @if ($breakPoint == 'tablet') {
-        @media screen and (max-width: 768px) {
+        @media screen and (max-width: 680px) {
             @content;
         }
     }
