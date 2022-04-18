@@ -222,6 +222,10 @@ body {
     right: 1em;
     bottom: 1.3em;
   }
+  .commentContainer .header .name {
+    font-size: 17px;
+    margin: 0 0.3em;
+  }
   .commentContainer .header .createdAt {
     margin-left: auto;
   }
