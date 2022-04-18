@@ -1,0 +1,8 @@
+.mainContainer {
+    margin: 0 auto;
+    max-width: 680px;
+    padding-bottom: 100px;
+    @include responsive('mobile') {
+        padding-bottom: 150px;
+    }
+}

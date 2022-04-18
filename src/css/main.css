@@ -1,0 +1,235 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  font-family: 'Rubik', sans-serif;
+  font-size: 16px;
+  background-color: #eaecf1;
+  padding: 1em;
+}
+
+@media screen and (max-width: 480px) {
+  body {
+    padding: 0.8em;
+  }
+}
+
+.mainContainer {
+  margin: 0 auto;
+  max-width: 680px;
+  padding-bottom: 100px;
+}
+
+@media screen and (max-width: 480px) {
+  .mainContainer {
+    padding-bottom: 150px;
+  }
+}
+
+.commentContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 1em;
+  border-radius: 7px;
+  background-color: white;
+  margin-bottom: 1em;
+}
+
+.commentContainer .scoreContainer {
+  margin-right: 1em;
+  padding: 10px;
+  background: #f5f6fa;
+  height: 100px;
+  border-radius: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.commentContainer .scoreContainer .score {
+  margin: 15px 0px;
+}
+
+.commentContainer .scoreContainer .plus,
+.commentContainer .scoreContainer .minus {
+  cursor: pointer;
+}
+
+.commentContainer .scoreContainer .plus:hover path,
+.commentContainer .scoreContainer .minus:hover path {
+  fill: #324152;
+}
+
+.commentContainer .header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 1em;
+}
+
+.commentContainer .header .avatar {
+  width: 40px;
+}
+
+.commentContainer .header .name {
+  font-weight: 700;
+  margin: 0 0.7em 0 1em;
+  font-size: 18px;
+}
+
+.commentContainer .header .createdAt {
+  color: #67727e;
+}
+
+.commentContainer .header .reply {
+  margin-left: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  cursor: pointer;
+}
+
+.commentContainer .header .reply:hover .reply-text {
+  color: #c3c4ef;
+}
+
+.commentContainer .header .reply:hover .reply-img path {
+  fill: #c3c4ef;
+}
+
+.commentContainer .header .reply .reply-text {
+  font-weight: 700;
+  margin-left: 5px;
+  color: #5457b6;
+}
+
+.commentContainer .comment-text {
+  color: #67727e;
+}
+
+.commentContainer .comment-text .mention-name {
+  color: #5457b6;
+  font-weight: 700;
+}
+
+.replyWrapper {
+  width: 95%;
+  margin-left: auto;
+  padding-left: 5%;
+  border-left: 3px solid #c3c4ef;
+}
+
+@media screen and (max-width: 480px) {
+  .commentContainer {
+    position: relative;
+    padding-bottom: 4em;
+    margin-bottom: 0.7em;
+  }
+  .commentContainer .scoreContainer {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    height: auto;
+    position: absolute;
+    bottom: 0.7em;
+    left: 1em;
+  }
+  .commentContainer .scoreContainer .score {
+    margin: 0 15px;
+  }
+  .commentContainer .header .reply {
+    position: absolute;
+    right: 1em;
+    bottom: 1.3em;
+  }
+  .commentContainer .header .createdAt {
+    margin-left: auto;
+  }
+}
+
+.add-comment-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 1em;
+  border-radius: 7px;
+  background-color: white;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  position: fixed;
+  bottom: 0;
+  margin: 0 auto;
+  max-width: 680px;
+  width: calc(100% - 2em);
+}
+
+.add-comment-container .account {
+  width: 45px;
+}
+
+.add-comment-container .add-comment {
+  width: 545px;
+  padding: 0.5em;
+  margin: 0px 1em;
+  height: 80px;
+  border-color: #67727e;
+}
+
+.add-comment-container .send {
+  padding: 0.8em 1.7em;
+  border: none;
+  border-radius: 5px;
+  background-color: #5457b6;
+  color: white;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.add-comment-container .send:hover {
+  background-color: #c3c4ef;
+}
+
+@media screen and (max-width: 480px) {
+  .add-comment-container {
+    padding-bottom: 4em;
+  }
+  .add-comment-container .account {
+    position: absolute;
+    left: 1em;
+    bottom: 0.5em;
+  }
+  .add-comment-container .add-comment {
+    height: 79px;
+    margin: 0;
+  }
+  .add-comment-container .send {
+    position: absolute;
+    right: 1em;
+    bottom: 0.9em;
+  }
+}
+/*# sourceMappingURL=main.css.map */

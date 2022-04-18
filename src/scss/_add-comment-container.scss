@@ -1,0 +1,54 @@
+.add-comment-container {
+    display: flex;
+    padding: 1em;
+    border-radius: 7px;
+    background-color: $white;
+    align-items: flex-start;
+    position: fixed;
+    bottom: 0;
+    margin: 0 auto;
+    max-width: 680px;
+    width: calc(100% - 2em);
+    .account {
+        width: 45px;
+    }
+    .add-comment {
+        width: 545px;
+        padding: 0.5em;
+        margin: 0px 1em;
+        height: 80px;
+        border-color: $grayish-blue;
+    }
+    .send {
+        padding: 0.8em 1.7em;
+        border: none;
+        border-radius: 5px;
+        background-color: $moderate-blue;
+        color: white;
+        font-weight: 700;
+        text-transform: uppercase;
+        &:hover {
+            background-color: $light-grayish-blue;
+        }
+    }
+}
+
+@include responsive('mobile') {
+    .add-comment-container {
+        padding-bottom: 4em;
+        .account {
+            position: absolute;
+            left: 1em;
+            bottom: 0.5em;
+        }
+        .add-comment {
+            height: 79px;
+            margin: 0;
+        }
+        .send {
+            position: absolute;
+            right: 1em;
+            bottom: 0.9em;
+        }
+    }
+}

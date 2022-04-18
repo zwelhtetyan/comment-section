@@ -1,0 +1,107 @@
+.commentContainer {
+    display: flex;
+    padding: 1em;
+    border-radius: 7px;
+    background-color: $white;
+    margin-bottom: 1em;
+
+    .scoreContainer {
+        margin-right: 1em;
+        padding: 10px;
+        background: $very-light-gray;
+        height: 100px;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .score {
+            margin: 15px 0px;
+        }
+        .plus,
+        .minus {
+            cursor: pointer;
+            &:hover path {
+                fill: $dark-blue;
+            }
+        }
+    }
+    .header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1em;
+        .avatar {
+            width: 40px;
+        }
+        .name {
+            font-weight: 700;
+            margin: 0 0.7em 0 1em;
+            font-size: 18px;
+        }
+        .createdAt {
+            color: $grayish-blue;
+        }
+        .reply {
+            margin-left: auto;
+            display: flex;
+            cursor: pointer;
+
+            &:hover .reply-text {
+                color: $light-grayish-blue;
+            }
+            &:hover .reply-img path {
+                fill: $light-grayish-blue;
+            }
+
+            .reply-text {
+                font-weight: 700;
+                margin-left: 5px;
+                color: $moderate-blue;
+            }
+        }
+    }
+    .comment-text {
+        color: $grayish-blue;
+        .mention-name {
+            color: $moderate-blue;
+            font-weight: 700;
+        }
+    }
+}
+
+.replyWrapper {
+    width: 95%;
+    margin-left: auto;
+    padding-left: 5%;
+    border-left: 3px solid $light-grayish-blue;
+}
+
+@include responsive('mobile') {
+    .commentContainer {
+        position: relative;
+        padding-bottom: 4em;
+        margin-bottom: 0.7em;
+        .scoreContainer {
+            flex-direction: row;
+            align-items: center;
+            height: auto;
+            position: absolute;
+            bottom: 0.7em;
+            left: 1em;
+            .score {
+                margin: 0 15px;
+            }
+        }
+        .header {
+            .reply {
+                position: absolute;
+                right: 1em;
+                bottom: 1.3em;
+            }
+            .createdAt {
+                margin-left: auto;
+            }
+        }
+    }
+}
