@@ -107,6 +107,7 @@ function App() {
         e.preventDefault();
         setMessage('');
         setHandleSend({ replyable: false, editable: false });
+        const msg = message.split(' ').slice(1); // already setup mention name in comment component (line:112)
 
         const method = e.target.innerText;
         console.group(method);
@@ -126,7 +127,7 @@ function App() {
                               ...cmt,
                               replies: [
                                   ...cmt.replies,
-                                  creatingObject(message, replyingTo),
+                                  creatingObject(msg, replyingTo),
                               ],
                           }
                         : cmt.replies.length === 0
@@ -137,10 +138,7 @@ function App() {
                                   comment.user.username === replyingTo
                                       ? {
                                             ...cmt.replies,
-                                            ...creatingObject(
-                                                message,
-                                                replyingTo
-                                            ),
+                                            ...creatingObject(msg, replyingTo),
                                         }
                                       : comment
                               ),
