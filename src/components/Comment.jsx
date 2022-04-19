@@ -11,6 +11,7 @@ const Comment = (props) => {
         replyingTo,
         handlePlus,
         handleMinus,
+        handleReply,
     } = props;
 
     return (
@@ -90,7 +91,7 @@ const Comment = (props) => {
                                 </div>
                             </div>
                         ) : (
-                            <div className='reply'>
+                            <div className='reply' onClick={handleReply}>
                                 <svg
                                     width='14'
                                     height='13'

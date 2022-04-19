@@ -8,6 +8,11 @@ function App() {
     const [currentUser, setCurrentUser] = useState(Data.currentUser);
     const [comments, setComment] = useState(Data.comments);
     const [message, setMessage] = useState('');
+    const [handleSend, setHandleSend] = useState({
+        replyable: false,
+        editable: false,
+    });
+    const [replyingTo, setReplyingTo] = useState('');
 
     const handleVoteSystem = (e) => {
         const scoreContainer = e.currentTarget.parentElement.parentElement;
@@ -79,15 +84,13 @@ function App() {
         setMessage(e.target.value);
     };
 
-    const addingComment = (e) => {
-        e.preventDefault();
-        setMessage('');
-
+    const creatingObject = (message, name) => {
         const myComment = {
             id: nanoid(),
             content: message,
             createdAt: 'just now',
             score: 0,
+            replyingTo: name,
             user: {
                 image: {
                     png: './images/avatars/image-juliusomo.png',
@@ -97,8 +100,69 @@ function App() {
             },
             replies: [],
         };
+        return myComment;
+    };
 
-        setComment((prevComment) => [...prevComment, myComment]);
+    const addingComment = (e) => {
+        e.preventDefault();
+        setMessage('');
+        setHandleSend({ replyable: false, editable: false });
+
+        const method = e.target.innerText;
+        console.group(method);
+
+        document.querySelector('.add-comment').value.length !== 0 &&
+            method === 'SEND' &&
+            setComment((prevComment) => [
+                ...prevComment,
+                creatingObject(message, ''),
+            ]);
+
+        method === 'REPLY' &&
+            setComment((prevComment) => [
+                ...prevComment.map((cmt) =>
+                    cmt.user.username === replyingTo
+                        ? {
+                              ...cmt,
+                              replies: [
+                                  ...cmt.replies,
+                                  creatingObject(message, replyingTo),
+                              ],
+                          }
+                        : cmt.replies.length === 0
+                        ? cmt
+                        : {
+                              ...cmt,
+                              replies: cmt.replies.map((comment) =>
+                                  comment.user.username === replyingTo
+                                      ? {
+                                            ...cmt.replies,
+                                            ...creatingObject(
+                                                message,
+                                                replyingTo
+                                            ),
+                                        }
+                                      : comment
+                              ),
+                          }
+                ),
+            ]);
+    };
+
+    console.log(comments);
+    console.log(replyingTo);
+
+    const onBlur = () => {
+        const isMessage = document.querySelector('.add-comment').value;
+        !isMessage && setHandleSend({ replyable: false, editable: false });
+    };
+
+    const handleReply = (username) => {
+        setHandleSend((prev) => ({ ...prev, replyable: !prev.replyable }));
+        document.querySelector('.add-comment').focus();
+
+        setMessage(`@${username} `);
+        setReplyingTo(username);
     };
 
     const showComments = comments.map((comment) => {
@@ -113,6 +177,7 @@ function App() {
                     you={comment.user.username === 'juliusomo' && true}
                     handlePlus={(e) => handlePlus(comment.id, e)}
                     handleMinus={(e) => handleMinus(comment.id, e)}
+                    handleReply={() => handleReply(comment.user.username)}
                 />
                 <div className='replyWrapper'>
                     {comment.replies.length !== 0 &&
@@ -134,6 +199,9 @@ function App() {
                                     handleMinus={(e) =>
                                         handleMinus(reply.id, e)
                                     }
+                                    handleReply={() =>
+                                        handleReply(reply.user.username)
+                                    }
                                 />
                             );
                         })}
@@ -150,6 +218,8 @@ function App() {
                 addingComment={addingComment}
                 message={message}
                 handleMessage={handleMessage}
+                handleSend={handleSend}
+                onBlur={onBlur}
             />
         </div>
     );
