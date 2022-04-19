@@ -1,46 +1,63 @@
 import React from 'react';
 
 const Comment = (props) => {
+    const {
+        avatar,
+        username,
+        createdAt,
+        score,
+        content,
+        you,
+        replyingTo,
+        handlePlus,
+        handleMinus,
+    } = props;
+
     return (
         <div className='commentContainer'>
             <div className='scoreContainer'>
-                <svg
-                    width='11'
-                    height='11'
-                    xmlns='http://www.w3.org/2000/svg'
-                    className='plus'
-                >
-                    <path
-                        d='M6.33 10.896c.137 0 .255-.05.354-.149.1-.1.149-.217.149-.354V7.004h3.315c.136 0 .254-.05.354-.149.099-.1.148-.217.148-.354V5.272a.483.483 0 0 0-.148-.354.483.483 0 0 0-.354-.149H6.833V1.4a.483.483 0 0 0-.149-.354.483.483 0 0 0-.354-.149H4.915a.483.483 0 0 0-.354.149c-.1.1-.149.217-.149.354v3.37H1.08a.483.483 0 0 0-.354.15c-.1.099-.149.217-.149.353v1.23c0 .136.05.254.149.353.1.1.217.149.354.149h3.333v3.39c0 .136.05.254.15.353.098.1.216.149.353.149H6.33Z'
-                        fill='#C5C6EF'
-                    />
-                </svg>
-                <div className='score'>12</div>
+                <button className='plus-btn btn'>
+                    <svg
+                        width='11'
+                        height='11'
+                        xmlns='http://www.w3.org/2000/svg'
+                        className='plus'
+                        onClick={handlePlus}
+                    >
+                        <path
+                            d='M6.33 10.896c.137 0 .255-.05.354-.149.1-.1.149-.217.149-.354V7.004h3.315c.136 0 .254-.05.354-.149.099-.1.148-.217.148-.354V5.272a.483.483 0 0 0-.148-.354.483.483 0 0 0-.354-.149H6.833V1.4a.483.483 0 0 0-.149-.354.483.483 0 0 0-.354-.149H4.915a.483.483 0 0 0-.354.149c-.1.1-.149.217-.149.354v3.37H1.08a.483.483 0 0 0-.354.15c-.1.099-.149.217-.149.353v1.23c0 .136.05.254.149.353.1.1.217.149.354.149h3.333v3.39c0 .136.05.254.15.353.098.1.216.149.353.149H6.33Z'
+                            fill='#C5C6EF'
+                        />
+                    </svg>
+                </button>
 
-                <svg
-                    width='11'
-                    height='3'
-                    xmlns='http://www.w3.org/2000/svg'
-                    className='minus'
-                >
-                    <path
-                        d='M9.256 2.66c.204 0 .38-.056.53-.167.148-.11.222-.243.222-.396V.722c0-.152-.074-.284-.223-.395a.859.859 0 0 0-.53-.167H.76a.859.859 0 0 0-.53.167C.083.437.009.57.009.722v1.375c0 .153.074.285.223.396a.859.859 0 0 0 .53.167h8.495Z'
-                        fill='#C5C6EF'
-                    />
-                </svg>
+                <div className='score'>{score}</div>
+
+                <div className='minus-btn btn'>
+                    <svg
+                        width='11'
+                        height='3'
+                        xmlns='http://www.w3.org/2000/svg'
+                        className='minus'
+                        onClick={handleMinus}
+                    >
+                        <path
+                            d='M9.256 2.66c.204 0 .38-.056.53-.167.148-.11.222-.243.222-.396V.722c0-.152-.074-.284-.223-.395a.859.859 0 0 0-.53-.167H.76a.859.859 0 0 0-.53.167C.083.437.009.57.009.722v1.375c0 .153.074.285.223.396a.859.859 0 0 0 .53.167h8.495Z'
+                            fill='#C5C6EF'
+                        />
+                    </svg>
+                </div>
             </div>
             <div>
                 <div className='header'>
-                    <img
-                        src='images/avatars/image-amyrobson.png'
-                        alt=''
-                        className='avatar'
-                    />
-                    <div className='name'>amyrobson</div>
-                    {props.you && <div className='you'>you</div>}
-                    <div className='createdAt'> 2 days ago</div>
+                    <img src={avatar} alt='' className='avatar' />
+                    <div className='name'>{username}</div>
 
-                    {props.you ? (
+                    {you && <div className='you'>you</div>}
+
+                    <div className='createdAt'>{createdAt}</div>
+
+                    {you ? (
                         <div className='delete-and-edit'>
                             <div className='delete'>
                                 <svg
@@ -90,13 +107,10 @@ const Comment = (props) => {
                     )}
                 </div>
                 <p className='comment-text'>
-                    {props.name && (
-                        <span className='mention-name'>{props.name}</span>
+                    {replyingTo && (
+                        <span className='mention-name'>@{replyingTo}</span>
                     )}{' '}
-                    Impressive! Though it seems the drag feature could be
-                    improved. But overall it looks incredible. You've nailed the
-                    design and the responsiveness at various breakpoints works
-                    really well.
+                    {content}
                 </p>
             </div>
         </div>

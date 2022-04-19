@@ -15,22 +15,34 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        user-select: none;
 
         .score {
             margin: 15px 0px;
         }
+        .plus-btn,
+        .minus-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            outline: none;
+        }
         .plus,
         .minus {
             cursor: pointer;
-            &:hover path {
-                fill: $dark-blue;
+            path {
+                fill: $moderate-blue;
+                &:hover {
+                    fill: $light-grayish-blue;
+                }
             }
         }
     }
     .header {
         display: flex;
         align-items: center;
-        margin-bottom: 1em;
+        margin-bottom: 0.5em;
         .avatar {
             width: 40px;
         }
@@ -117,8 +129,8 @@
 .replyWrapper {
     width: 95%;
     margin-left: auto;
-    padding-left: 4%;
-    border-left: 3px solid $light-grayish-blue;
+    padding-left: 3%;
+    border-left: 3px solid $border-left-color;
 }
 
 @include responsive('tablet') {

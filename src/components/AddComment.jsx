@@ -1,13 +1,9 @@
 import React from 'react';
 
-const AddComment = () => {
+const AddComment = ({ currentUserImg }) => {
     return (
         <div className='add-comment-container'>
-            <img
-                src='images/avatars/image-amyrobson.png'
-                alt=''
-                className='account'
-            />
+            <img src={currentUserImg} alt='' className='account' />
             <textarea name='' id='' className='add-comment'></textarea>
             <button className='send'>Send</button>
         </div>
