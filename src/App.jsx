@@ -149,9 +149,6 @@ function App() {
             ]);
     };
 
-    console.log(comments);
-    console.log(replyingTo);
-
     const onBlur = () => {
         const isMessage = document.querySelector('.add-comment').value;
         !isMessage && setHandleSend({ replyable: false, editable: false });
