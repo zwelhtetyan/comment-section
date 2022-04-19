@@ -1,12 +1,23 @@
 import React from 'react';
 
-const AddComment = ({ currentUserImg }) => {
+const AddComment = ({
+    currentUserImg,
+    addingComment,
+    message,
+    handleMessage,
+}) => {
     return (
-        <div className='add-comment-container'>
+        <form className='add-comment-container' onSubmit={addingComment}>
             <img src={currentUserImg} alt='' className='account' />
-            <textarea name='' id='' className='add-comment'></textarea>
+            <textarea
+                name='message'
+                id=''
+                className='add-comment'
+                value={message}
+                onChange={handleMessage}
+            ></textarea>
             <button className='send'>Send</button>
-        </div>
+        </form>
     );
 };
 

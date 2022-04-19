@@ -283,6 +283,7 @@ body {
   margin: 0px 1em;
   height: 80px;
   border-color: #67727e;
+  border-radius: 10px;
 }
 
 .add-comment-container .send {
