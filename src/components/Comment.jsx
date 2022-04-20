@@ -13,6 +13,7 @@ const Comment = (props) => {
         handleMinus,
         handleReply,
         handleEdit,
+        handleDelete,
     } = props;
 
     return (
@@ -62,7 +63,7 @@ const Comment = (props) => {
 
                         {you ? (
                             <div className='delete-and-edit'>
-                                <div className='delete'>
+                                <div className='delete' onClick={handleDelete}>
                                     <svg
                                         width='12'
                                         height='14'

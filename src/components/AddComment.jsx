@@ -20,7 +20,7 @@ const AddComment = ({
                 onBlur={onBlur}
             ></textarea>
             <button className='send' onClick={addingComment}>
-                {(!message ? 'Send' : handleSend.replyable && 'Reply') ||
+                {(handleSend.replyable && 'Reply') ||
                     (handleSend.editable && 'Update') ||
                     'Send'}
             </button>

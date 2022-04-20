@@ -1,12 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AddComment from './components/AddComment.jsx';
 import Comment from './components/Comment.jsx';
 import Data from './data.js';
 import { nanoid } from 'nanoid';
+import Delete from './components/Delete.jsx';
 
 function App() {
     const currentUser = Data.currentUser;
-    const [comments, setComment] = useState(Data.comments);
+    const [comments, setComment] = useState(
+        JSON.parse(localStorage.getItem('comments')) || Data.comments
+    );
     const [message, setMessage] = useState('');
     const [handleSend, setHandleSend] = useState({
         replyable: false,
@@ -14,6 +17,11 @@ function App() {
     });
     const [replyingTo, setReplyingTo] = useState('');
     const [editableId, setEditableId] = useState(null);
+    const [deletableId, setDeletableId] = useState(null);
+
+    useEffect(() => {
+        localStorage.setItem('comments', JSON.stringify(comments));
+    }, [comments]);
 
     const handleVoteSystem = (e) => {
         const scoreContainer = e.currentTarget.parentElement.parentElement;
@@ -109,7 +117,9 @@ function App() {
         setMessage('');
         setHandleSend({ replyable: false, editable: false });
         setEditableId(null);
-        const msg = message.split(' ').slice(1).join(' '); // already setup mention name in comment component (line:112)
+        const msg = message.startsWith('@')
+            ? message.split(' ').slice(1).join(' ')
+            : message; // already setup mention name in comment component (line:112)
 
         const method = e.target.innerText;
 
@@ -170,7 +180,7 @@ function App() {
     };
 
     const handleReply = (username) => {
-        setHandleSend((prev) => ({ ...prev, replyable: !prev.replyable }));
+        setHandleSend((prev) => ({ editable: false, replyable: true }));
         document.querySelector('.add-comment').focus();
 
         setMessage(`@${username} `);
@@ -188,7 +198,7 @@ function App() {
     }
 
     const handleEdit = (e, id) => {
-        setHandleSend((prev) => ({ ...prev, editable: !prev.editable }));
+        setHandleSend((prev) => ({ replyable: false, editable: true }));
         document.querySelector('.add-comment').focus();
         const currentMessage =
             e.currentTarget.parentElement.parentElement.nextElementSibling
@@ -196,6 +206,33 @@ function App() {
 
         setMessage(currentMessage);
         setEditableId(id);
+    };
+
+    const handleDelete = (id) => {
+        setDeletableId(id);
+    };
+
+    const completelyDelete = () => {
+        setComment((comments) => {
+            let newarr = comments.filter((cmt) => cmt.id !== deletableId);
+            let arr = newarr.map((cmt) =>
+                cmt.replies.length !== 0
+                    ? {
+                          ...cmt,
+                          replies: cmt.replies.filter(
+                              (cmt) => cmt.id !== deletableId
+                          ),
+                      }
+                    : cmt
+            );
+            return arr;
+        });
+
+        setDeletableId(null);
+    };
+
+    const handleCancel = () => {
+        setDeletableId(null);
     };
 
     const showComments = comments.map((comment) => {
@@ -212,6 +249,7 @@ function App() {
                     handleMinus={(e) => handleMinus(comment.id, e)}
                     handleReply={() => handleReply(comment.user.username)}
                     handleEdit={(e) => handleEdit(e, comment.id)}
+                    handleDelete={() => handleDelete(comment.id)}
                 />
                 <div className='replyWrapper'>
                     {comment.replies.length !== 0 &&
@@ -237,6 +275,7 @@ function App() {
                                         handleReply(reply.user.username)
                                     }
                                     handleEdit={(e) => handleEdit(e, reply.id)}
+                                    handleDelete={() => handleDelete(reply.id)}
                                 />
                             );
                         })}
@@ -256,6 +295,12 @@ function App() {
                 handleSend={handleSend}
                 onBlur={onBlur}
             />
+            {deletableId && (
+                <Delete
+                    handleCancel={handleCancel}
+                    completelyDelete={completelyDelete}
+                />
+            )}
         </div>
     );
 }
