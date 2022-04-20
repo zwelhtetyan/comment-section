@@ -5,7 +5,7 @@ import Data from './data.js';
 import { nanoid } from 'nanoid';
 
 function App() {
-    const [currentUser, setCurrentUser] = useState(Data.currentUser);
+    const currentUser = Data.currentUser;
     const [comments, setComment] = useState(Data.comments);
     const [message, setMessage] = useState('');
     const [handleSend, setHandleSend] = useState({
@@ -13,6 +13,7 @@ function App() {
         editable: false,
     });
     const [replyingTo, setReplyingTo] = useState('');
+    const [editableId, setEditableId] = useState(null);
 
     const handleVoteSystem = (e) => {
         const scoreContainer = e.currentTarget.parentElement.parentElement;
@@ -107,10 +108,10 @@ function App() {
         e.preventDefault();
         setMessage('');
         setHandleSend({ replyable: false, editable: false });
-        const msg = message.split(' ').slice(1); // already setup mention name in comment component (line:112)
+        setEditableId(null);
+        const msg = message.split(' ').slice(1).join(' '); // already setup mention name in comment component (line:112)
 
         const method = e.target.innerText;
-        console.group(method);
 
         document.querySelector('.add-comment').value.length !== 0 &&
             method === 'SEND' &&
@@ -134,12 +135,27 @@ function App() {
                         ? cmt
                         : {
                               ...cmt,
+                              replies: replyingInsideReply(
+                                  cmt,
+                                  msg,
+                                  replyingTo
+                              ),
+                          }
+                ),
+            ]);
+
+        method === 'UPDATE' &&
+            setComment((comments) => [
+                ...comments.map((cmt) =>
+                    cmt.id === editableId
+                        ? { ...cmt, content: message }
+                        : cmt.replies.length === 0
+                        ? cmt
+                        : {
+                              ...cmt,
                               replies: cmt.replies.map((comment) =>
-                                  comment.user.username === replyingTo
-                                      ? {
-                                            ...cmt.replies,
-                                            ...creatingObject(msg, replyingTo),
-                                        }
+                                  comment.id === editableId
+                                      ? { ...comment, content: msg }
                                       : comment
                               ),
                           }
@@ -147,6 +163,7 @@ function App() {
             ]);
     };
 
+    // fire when lost focus
     const onBlur = () => {
         const isMessage = document.querySelector('.add-comment').value;
         !isMessage && setHandleSend({ replyable: false, editable: false });
@@ -158,6 +175,27 @@ function App() {
 
         setMessage(`@${username} `);
         setReplyingTo(username);
+    };
+
+    function replyingInsideReply(cmt, msg, replyingTo) {
+        const repliesArr = [...cmt.replies];
+        cmt.replies.forEach(
+            (comment) =>
+                comment.user.username === replyingTo &&
+                repliesArr.push(creatingObject(msg, replyingTo))
+        );
+        return repliesArr;
+    }
+
+    const handleEdit = (e, id) => {
+        setHandleSend((prev) => ({ ...prev, editable: !prev.editable }));
+        document.querySelector('.add-comment').focus();
+        const currentMessage =
+            e.currentTarget.parentElement.parentElement.nextElementSibling
+                .innerText;
+
+        setMessage(currentMessage);
+        setEditableId(id);
     };
 
     const showComments = comments.map((comment) => {
@@ -173,6 +211,7 @@ function App() {
                     handlePlus={(e) => handlePlus(comment.id, e)}
                     handleMinus={(e) => handleMinus(comment.id, e)}
                     handleReply={() => handleReply(comment.user.username)}
+                    handleEdit={(e) => handleEdit(e, comment.id)}
                 />
                 <div className='replyWrapper'>
                     {comment.replies.length !== 0 &&
@@ -197,6 +236,7 @@ function App() {
                                     handleReply={() =>
                                         handleReply(reply.user.username)
                                     }
+                                    handleEdit={(e) => handleEdit(e, reply.id)}
                                 />
                             );
                         })}
